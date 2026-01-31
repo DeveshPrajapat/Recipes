@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %}
+Receipes 
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 " method="post" >
+
+    <form class="bg-dark text-white p-3 col-6 mx-auto card p-3 shadow-lg" method="POST" enctype="multipart/form-data">
+
+
+        {% csrf_token %}
+        <h2>Updata Receipe</h2>
+        <hr>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Recipe name </label>
+          <input type="text" value = "{{receipes.recipe_name}}" class="form-control" name="recipe_name">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Recipe Description</label>
+          <textarea  class="form-control" value = "" name="recipe_des">{{receipes.recipe_des}}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Recipe Image</label>
+           <input type="file" value = "{{receipes.recipe_image}}" class="form-control" name="recipe_image">
+          </div>
+        <button type="submit" class="btn btn-primary">Update Receipe</button>
+
+      </form>
+    </div>
+{% endblock %}

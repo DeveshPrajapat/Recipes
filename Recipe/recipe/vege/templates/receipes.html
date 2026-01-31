@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block title %}
+Receipes 
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5 " method="post" >
+
+    <form class="bg-dark text-white p-3 col-6 mx-auto card p-3 shadow-lg" method="POST" enctype="multipart/form-data">
+
+
+        {% csrf_token %}
+        <h2>Add Receipe</h2>
+        <hr>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Receipe Name</label>
+          <input type="text" class="form-control" name="recipe_name"> {% comment %} model main jo naam liye vahi lena hai {% endcomment %}
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Receipe Description</label>
+          <textarea  class="form-control" name="recipe_des"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Receipe Image</label>
+           <input type="file" class="form-control" name="recipe_image">
+          </div>
+        <button type="submit" class="btn btn-primary">Add Receipe</button>
+
+      </form>
+
+<hr>
+
+<div class="mt-5">
+
+  <div class="mx-auto col-6">
+    <form action="">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Search Food </label>
+      <input type="text" class="form-control" name="search">
+
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+</div>
+</div>
+<hr>
+
+<table class="table m-5">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Recipe Name</th>
+      <th scope="col">Recipe Des.</th>
+      <th scope="col">Recipe Image</th>
+      <th scope="col">Actions</th>                
+             
+    </tr>
+  </thead>
+  <tbody>
+    {% for recipe in receipes  %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td width="200">{{recipe.recipe_name}}</td>  {% comment %} model vale naam use karna hai {% endcomment %}
+       
+      <td width="500">{{recipe.recipe_des}}</td>
+        <td>
+          {% if recipe.recipe_image %}
+          <img src="{{ recipe.recipe_image.url }}" alt="Recipe Image" style="width: 300px; height: 200px; object-fit: cover;">
+
+          {% else %}
+            <p>No Image Available</p> <!-- Or use a default placeholder image -->
+          {% endif %}
+        </td>
+      <td>
+        <a href="/delete-receipe/{{recipe.id}}" class="btn btn-danger">Delete</a>
+        <a href="/update_receipe/{{recipe.id}}" class="btn btn-success">Edit</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+
+{% endblock %}
